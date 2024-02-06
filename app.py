@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from statsmodels.tsa.seasonal import seasonal_decompose
 import numpy as np
+import io
 
 file_path = 'vehicles_us.csv'
 car_data = pd.read_csv(file_path)
@@ -66,8 +67,13 @@ if show_price_chart:
     st.pyplot()
 
 
+plt.figure(figsize=(8, 6))
 plt.scatter(car_data['model_year'], car_data['price'])
 plt.title('Car Price vs. Model Year')
 plt.xlabel('Model Year')
 plt.ylabel('Price')
-plt.show()
+
+# Create a buffer to store the plot image
+buffer = io.BytesIO()
+plt.savefig(buffer, format='png')
+plt.close()
