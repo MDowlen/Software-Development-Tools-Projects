@@ -8,6 +8,7 @@ import seaborn as sns
 from statsmodels.tsa.seasonal import seasonal_decompose
 import numpy as np
 import tempfile
+import os
 
 file_path = 'vehicles_us.csv'
 car_data = pd.read_csv(file_path)
