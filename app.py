@@ -73,7 +73,19 @@ plt.title('Car Price vs. Model Year')
 plt.xlabel('Model Year')
 plt.ylabel('Price')
 
-# Create a buffer to store the plot image
-buffer = io.BytesIO()
-plt.savefig(buffer, format='png')
-plt.close()
+# Create a temporary file to store the plot image
+with tempfile.NamedTemporaryFile(suffix='.png', delete=False) as tmp_file:
+    plt.savefig(tmp_file.name)  # Save plot to the temporary file
+
+# Read the image data from the temporary file
+with open(tmp_file.name, 'rb') as image_file:
+    img_data = image_file.read()
+
+# Display the image using st.image and then delete the temporary file
+st.image(img_data, width=800)
+
+# Delete the temporary file to avoid cluttering the filesystem
+try:
+    os.remove(tmp_file.name)
+except OSError:
+    pass  # Ignore errors if the file is already removed
