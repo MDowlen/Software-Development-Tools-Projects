@@ -5,7 +5,7 @@ import plotly.express as px
 file_path = 'vehicles_us.csv'
 car_data = pd.read_csv(file_path)
 
-st.header('Software Development Tools: Project', divider='rainbow')
+st.header('Software Development Tools: Project')
 st.header('_Vehicles_ US :green[Project] :🧘‍♀️:')
 
 car_data['date_posted'] = pd.to_datetime(car_data['date_posted'])
