@@ -7,8 +7,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from statsmodels.tsa.seasonal import seasonal_decompose
 import numpy as np
-import tempfile
-import os
+
 
 file_path = 'vehicles_us.csv'
 car_data = pd.read_csv(file_path)
@@ -74,19 +73,8 @@ plt.title('Car Price vs. Model Year')
 plt.xlabel('Model Year')
 plt.ylabel('Price')
 
-# Create a temporary file to store the plot image
-with tempfile.NamedTemporaryFile(suffix='.png', delete=False) as tmp_file:
-    plt.savefig(tmp_file.name)  # Save plot to the temporary file
+# Turn off axis ticks and labels to avoid duplicate display in Streamlit
+plt.axis("off")
 
-# Read the image data from the temporary file
-with open(tmp_file.name, 'rb') as image_file:
-    img_data = image_file.read()
-
-# Display the image using st.image and then delete the temporary file
-st.image(img_data, width=800)
-
-# Delete the temporary file to avoid cluttering the filesystem
-try:
-    os.remove(tmp_file.name)
-except OSError:
-    pass  # Ignore errors if the file is already removed
+# Display the plot directly using st.pyplot
+st.pyplot()
