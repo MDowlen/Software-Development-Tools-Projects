@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 import numpy as np
+import matplotlib.pyplot as plt
 
 file_path = 'vehicles_us.csv'
 car_data = pd.read_csv(file_path)
