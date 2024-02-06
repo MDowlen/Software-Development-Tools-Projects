@@ -1,8 +1,11 @@
 import streamlit as st
-import pandas as pd
+import pandas as pd 
 import plotly.express as px
-import numpy as np
+import altair as alt
 import matplotlib.pyplot as plt
+import seaborn as sns
+from statsmodels.tsa.seasonal import seasonal_decompose
+import numpy as np
 
 file_path = 'vehicles_us.csv'
 car_data = pd.read_csv(file_path)
