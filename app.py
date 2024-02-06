@@ -69,12 +69,26 @@ if show_price_chart:
 # Create the checkbox with a clear label
 show_regression_line = st.checkbox("Show Regression Line")
 
-# Create the scatter plot
-plt.figure(figsize=(8, 6))  
-plt.scatter(car_data['odometer'], car_data['price'])
+if np.isclose(np.linalg.cond(np.vstack([car_data['odometer'], car_data['price']])), 0):
+    print("Warning: Data matrix is ill-conditioned, consider regularization.")
+
+# Try fitting a linear model:
+try:
+    m, b = np.polyfit(car_data['odometer'], car_data['price'], 1)
+except LinAlgError:
+    # If linear fit fails, explore alternatives:
+    print("Linear fit failed. Trying higher-order polynomial...")
+    m, b = np.polyfit(car_data['odometer'], car_data['price'], 2)  # Or explore non-linear models
+
+# Plot the data and fitted line
+plt.figure(figsize=(8, 6))
+plt.scatter(car_data['odometer'], car_data['price'], label='Data')
+plt.plot(car_data['odometer'], m * car_data['odometer'] + b, color='red', label='Fitted line')
 plt.title('Car Price vs. Odometer Reading')
 plt.xlabel('Odometer')
 plt.ylabel('Price')
+plt.legend()
+plt.show()
 
 # Add the regression line conditionally
 if show_regression_line:
@@ -82,5 +96,5 @@ if show_regression_line:
     plt.plot(car_data['odometer'], m * car_data['odometer'] + b, color='red', label='Regression Line')
     plt.legend()  # Display the legend if a line is added
 
-# Display the chart using st.pyplot
+
 st.pyplot()
