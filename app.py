@@ -18,7 +18,7 @@ numeric_cols = car_data.select_dtypes(include=[np.number])
 numeric_cols['date_posted'] = car_data['date_posted']
 
 # Resample numeric data on a monthly basis at the end of the month
-monthly_data = numeric_cols.resample('ME', on='date_posted').mean()
+monthly_data = numeric_cols.resample('MEnd', on='date_posted').mean()
 
 # Time series plot for average price
 plt.figure(figsize=(12, 6))
